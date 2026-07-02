@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #050403;
+  --color-paper: #d8cfae;
+  --color-terminal: #1a2f1a;
+  --color-neon-green: #39ff14;
+  --color-neon-magenta: #ff2ec4;
+  --color-neon-lavender: #b39dff;
+  --color-neon-red: #ff2b2b;
+
+  --font-terminal: "VT323", ui-monospace, monospace;
+  --font-type: "Courier Prime", ui-monospace, monospace;
+  --font-clash: "Comic Neue", cursive;
+}
+
+body {
+  margin: 0;
+  background: var(--color-void);
+  color: var(--color-paper);
+  font-family: var(--font-type);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+/* photosensitivity-safe blink: slow, partial-opacity only, never full black/white flash */
+@keyframes cursed-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* photosensitivity-safe hue cycle: slow (10s+), moderate saturation swing only */
+@keyframes cursed-hue-cycle {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes cursed-marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes cursed-zoom-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(var(--zoom-scale, 1.05));
+  }
+}
+
+.cursed-zoom-pulse {
+  animation-name: cursed-zoom-pulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes cursed-scroll-skew-keyframes {
+  0% {
+    transform: skewY(calc(var(--skew-max, 0deg) * -1));
+  }
+  50% {
+    transform: skewY(0deg);
+  }
+  100% {
+    transform: skewY(var(--skew-max, 0deg));
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .cursed-scroll-skew {
+    animation-name: cursed-scroll-skew-keyframes;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root);
+    animation-range: 0% 100%;
+  }
+}
